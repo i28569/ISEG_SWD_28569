@@ -1,11 +1,12 @@
-from flask import Flask, request
+from flask import Flask, request, make_response, render_template
 
 app = Flask(__name__)
 
 @app.route('/')
-
 def index():
-    return 'Hello World!'
+    response = make_response('Hello World!')
+    response.headers['Content-Type'] = 'text/plain'
+    return response
 
 @app.route('/users/<username>')
 def show_user(username):
@@ -20,6 +21,11 @@ def login():
         return 'Login successful'
     else:
         return 'Invalid username or password'
+
+@app.route('/index_html_test')
+def index_html():
+    name = 'Ricardo'
+    return render_template('index.html',name = name)
 
 
 if __name__ == '__main__':
