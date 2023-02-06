@@ -20,9 +20,9 @@ def show_user(user):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        user = request.form['username']
         password = request.form['password']
-    if username == 'test' and password == 'test':
+    if user == 'test' and password == 'test':
         return 'Login successful'
     else:
         return 'Invalid username or password'
