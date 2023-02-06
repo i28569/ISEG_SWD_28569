@@ -22,7 +22,7 @@ def login():
     else:
         return 'Invalid username or password'
 
-@app.route('/template')
+@app.route('/t')
 def index_template():
     name = 'Ricardo'
     return render_template('index.html',name=name)
