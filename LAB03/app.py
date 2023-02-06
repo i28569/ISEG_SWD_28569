@@ -19,6 +19,8 @@ def show_user(user):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    user = 'test'
+    password = 'test'
     if request.method == 'POST':
         user = request.form['username']
         password = request.form['password']
