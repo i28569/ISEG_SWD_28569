@@ -36,4 +36,5 @@ def delete_user(id):
 
 
 if __name__ == "__main__":
+    init_db()
     app.run()
