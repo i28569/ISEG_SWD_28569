@@ -8,9 +8,9 @@ def index():
     response.headers['Content-Type'] = 'text/plain'
     return response
 
-@app.route('/users/<username>')
-def show_user(username):
-    return f'Hello {username} and welcome to my first web application!'
+@app.route('/users/<user>')
+def show_user(user):
+    return f'Hello {user} and welcome to my first web application!'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
