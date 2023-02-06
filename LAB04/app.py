@@ -15,6 +15,7 @@ def connect_db():
 def init_db():
     with connect_db() as con:
         con.execute('CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)')
+        return(print('Table created successfully!'))
 
 def create_user(name):
     with connect_db() as con:
