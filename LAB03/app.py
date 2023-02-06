@@ -2,8 +2,10 @@ from flask import Flask, request, make_response, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
+csrf = CSRFProtect(app)
 
 @app.route('/')
 def index():
@@ -42,6 +44,9 @@ def form():
         name = form.name.data
         return "Hello " + name
     return render_template("form.html",form=form)
+
+app.config["SECRET_KEY"] = "test_key"
+
 
 if __name__ == '__main__':
     app.run()
