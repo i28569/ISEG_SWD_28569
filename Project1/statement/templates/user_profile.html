@@ -1,0 +1,50 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <title>{{ user[1] }}'s Profile</title>
+  </head>
+  <body>
+    <header >
+      <h1>{{ user[1] }}'s Profile</h1>
+        <p>Username: {{ user[1] }}</p>
+        <p>Email: {{ user[2] }}</p>
+        <p>Registration date: {{ user[4] }}</p>
+    </header>
+    <h2>Posts</h2>
+    {% for post in posts %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="post">
+            <p class="username">Author: {{ post[1] }}</p>
+            <p class="content">{{ post[3] }}</p>
+            <p class="timestamp">{{ post[4] }}</p>
+          </div>
+          <hr>
+          <div class="card-footer">
+            <form action="{{ url_for('comment') }}" method="post">
+              {{ form.hidden_tag() }}
+              <input type="hidden" name="post_id" value="{{ post[0] }}">
+              <input type="text" name="content" placeholder="Add a comment..." class="form-control">
+              <button type="submit" class="btn btn-primary btn-sm mt-2">Comment</button>
+            </form>
+            <!-- Comments -->
+            {% for comment in comments %}
+              {% if comment[1] == post[0]%}
+              <div class="card-body mt-3">
+                <p class="comment">{{ comment[2] }} : {{ comment[3] }}</p>
+                <form action="{{ url_for('upvote_comment') }}" method="post">
+                  {{ form.hidden_tag() }}
+                  <input type="hidden" name="comment_id" value="{{ comment[0] }}">
+                  <button type="submit" class="btn btn-primary btn-sm">Upvote</button>
+                </form>
+                <span class="badge badge-secondary"> Upvotes: {{ comment[5] }} upvotes</span>
+              </div>
+              {% endif %}
+  
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

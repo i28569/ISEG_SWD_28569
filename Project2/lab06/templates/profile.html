@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>Profile</title>
+    </head>
+    <body>
+        <h1>{{ user[1] }}</h1>
+        <img src="static/{{ user[4] }}" alt="{{ user[1] }}'s image">
+        <h2>Posts:</h2>
+        {% for post in posts %}
+            <h3>{{ post[2] }}</h3>
+            <p>{{ post[3] }}</p>
+        {% endfor %}
+
+        <a href="/submit_post">submit post</a>
+    </body>
+</html>

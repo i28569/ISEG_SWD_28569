@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <form action="{{ url_for('controller.login') }}" method="post">
+            Email: <input type="email" name="email"><br>
+            Password: <input type="password" name="password"><br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,54 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <h2>Feed</h2>
+  <p>View and post updates on the Sarcastic Network</p>
+
+  <!-- Post Form -->
+  <form action="{{ url_for('post') }}" method="post" >
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      <textarea class="form-control" rows="3" name="content"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Post</button>
+  </form>
+
+  <!-- Posts -->
+  <hr>
+  <h3>Posts</h3>
+  {% for post in posts %}
+    <div class="card mb-3">
+      <div class="card-body">
+          <div class="post">
+          <p class="username">{{ post.username }}</p>
+          <p class="content">{{ post.content }}</p>
+          <p class="content">{{ post.created_at }}</p>
+      </div>
+      <div class="card-footer">
+        <form action="{{ url_for('comment') }}" method="post">
+          {{ form.hidden_tag() }}
+          <input type="hidden" name="post_id" value="{{ post.id }}">
+
+          
+          <input type="text" name="content" placeholder="Add a comment...">
+          <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+        </form>
+        <!-- Comments -->
+        {% for comment in post.comments %}
+          <div class="card-body">
+            {{ comment.content }}
+            <form action="{{ url_for('upvote_comment') }}" method="post">
+              <input type="hidden" name="comment_id" value="{{ comment.id }}">
+              <button type="submit" class="btn btn-primary btn-sm">Upvote</button>
+            </form>
+            <span class="badge badge-secondary">{{ comment.upvotes }} upvotes</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
