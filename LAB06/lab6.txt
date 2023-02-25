@@ -1,0 +1,48 @@
+--> Can you describe how user authentication and authorization is implemented in each project?
+
+No project 1, o processo de autenticação é feito recorrendo à função de login disponível no app.py, na qual, recorrendo à classe do LoginForm, é solicitado ao utilizador o username e password, sendo posteriormente verificados os dados introduzidos comparando com os registos disponíveis na base de dados.
+
+Mediante aprovação bem sucedida, o utilizador é encaminhado para a página principal. Em termos de autorizações, se estiver na página do Feed, consegue ver os posts e comentários dos restantes utilizadores, a par de que na sua página de perfil somente consegue ter acesso aos posts e comentários publicados por si. Estas autorizações são definidas nas funções feed() e profile(), respetivamente.
+
+No project 2, uma vez que a aplicação recorre a uma estrutura mais modular, é utilizado um blueprint no app.py para se conectar aos controladores, onde então está definida a função login() que permite autenticar o utilizador.
+
+
+-->  Can you describe how user posts and comments are implemented in Project 1?
+
+
+No Project1, tanto os posts como os comments estão implementados no apps.py, nas funções post() e comment(), respetivamente. 
+Na função post(), na linha do script
+
+       c.execute('INSERT INTO posts (user_id, picture, content) VALUES (?, ?, ?)', (user_id, img_b , content))
+
+é inserida uma nova linha na BD, na tabela posts e o utilizador é depois redirecionado para o feed, onde são mostrados todos os posts realizados.
+
+Na função do comment() a lógica é idêntica, à exceção da tabela onde é inserido um novo comentário, que passa a ser a tabela comments.
+
+Ambas as funções recorrem à class LoginForm para capturarem, no background, os campos post_id e user_id, para preencher nas respetivas tabelas.
+
+
+
+--> Can you describe how the search feature is implemented in project 1?
+
+
+A funcionalidade do Search está definida na função Search(), disponível na aplicação principal do projeto e pega no texto escrito pelo utilizador e procura por uma linha na coluna content da tabela posts que contenha esse texto:
+
+	c.execute("SELECT * FROM posts WHERE content LIKE ?", ('%' + search_query + '%',))
+
+
+OS resultados obtidos são depois passados para a variável results e incluídos como argumento no render_template que é feito ao template search.html. Todos os comentários inerentes aos posts encontrados são também passados como argumento.
+
+
+
+--> Can you describe how user photos are uploaded on project 2?
+
+No project 2, na route do register, existe um dos campos que permite ao utilizador fazer upload de uma imagem. A função secure_filename() é utilizada para se gravar a imagem com um nome seguro e a imagem é depois gravada com esse nome numa diretoria específica
+
+	image.save(os.path.join("labs/lab06/static/", filename))
+
+
+--> Can you describe how the MVC architecture was implemented in project 2?
+
+O project 2 está desenhado de acordo com uma arquitetura MVC ao dividir as funções de lógica e de tratamento da informação, das funções de apresentação. Na parte dos Models, toda a estrutura de tabelas e de organização dos dados é criada. Essas tabelas são guardadas dentro de uma base de dados que é depois consultada e manipulada noutras partes do código. No ficheiro das views é estabelecida a relação das funções com a respetiva apresentação visual (ficheiros html). Nos controllers estão definidas todas as funções que são utilizadas consoante os diferentes routes a serem utilizados na aplicação web. É também neste ficheiro que se faz a ligação com as funções criadas nas views. A aplicação principal, através do blueprint que utiliza e que estabelece a ligação ao ficheiro dos controllers, importa todos os routes que foram criados e acaba por concretizar toda a estrutura através do comando de execução da aplicação. 
+
